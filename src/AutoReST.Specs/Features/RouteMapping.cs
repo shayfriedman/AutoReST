@@ -5,7 +5,7 @@ using AutoReST.Routing;
 using AutoReST.Specs.Helpers;
 using Machine.Specifications;
 
-namespace AutoReST.Specs.Features.Routing
+namespace AutoReST.Specs.Features
 {
     [Subject("Route Mapping")]
     public class when_generating_verb_route_for_actionInfo_with_single_parameter

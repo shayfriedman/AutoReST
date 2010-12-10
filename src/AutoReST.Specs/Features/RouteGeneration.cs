@@ -4,7 +4,7 @@ using AutoReST.Infrastructure;
 using AutoReST.Routing;
 using Machine.Specifications;
 
-namespace AutoReST.Specs.Features.Routing
+namespace AutoReST.Specs.Features
 {
     [Subject("Route Generation")]
     public class when_generating_rest_routing_based_on_verbs_given_assembly

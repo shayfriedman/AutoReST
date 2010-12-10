@@ -5,7 +5,7 @@ using AutoReST.Infrastructure;
 using AutoReST.Specs.Helpers;
 using Machine.Specifications;
 
-namespace AutoReST.Specs.Features.Infrastructure
+namespace AutoReST.Specs.Features
 {
     [Subject("Parsing Controllers")]
     public class when_parsing_a_controller_with_no_actions

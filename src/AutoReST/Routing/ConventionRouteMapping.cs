@@ -5,6 +5,7 @@ using AutoReST.Infrastructure;
 
 namespace AutoReST.Routing
 {
+    // TODO: Refactor this entire class. It's just a quick hack for testing some idea...
     public class ConventionRouteMapping : VerbRouteMapping
     {
         public string ResourceReadAction { get; set; }
