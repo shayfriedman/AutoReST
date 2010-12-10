@@ -1,5 +1,7 @@
 Distributed under BSD License. See LICENSE.TXT for full license
 
+[PLEASE NOTE THAT THIS HAS NOT BEEN TESTED IN FULL PRODUCTION YET. USE AT YOUR OWN WILL. IT'S STILL EVOLVING]
+
 *AutoReST*
 
 
@@ -8,12 +10,9 @@ Add some ReST flavors to MVC Applications:
 Currently Support:
 
 - Routing Based on Verbs
-
-
-Planned: 
-
 - Routing Based on Conventions
-- Conneg
+
+Issue tracker is: http://youtrack.codebetter.com/issues/AREST
 
 
 
@@ -24,7 +23,7 @@ Create your controllers and set the correct verbs. Call the following in your Re
 
             var routeGenerator = new RestRouteGenerator();
 
-            routes.AddRoutes(routeGenerator.GenerateRoutesFromAssemblyAssembly.GetExecutingAssembly()));
+            routeGenerator.GenerateRoutesFromAssemblyAssembly.GetExecutingAssembly(), routes));
 
 
 like so:
@@ -36,7 +35,7 @@ like so:
          
             var routeGenerator = new RestRouteGenerator();
 
-            routes.AddRoutes(routeGenerator.GenerateRoutesFromAssembly(Assembly.GetExecutingAssembly()));
+            routeGenerator.GenerateRoutesFromAssemblyAssembly.GetExecutingAssembly(), routes));
 
             routes.MapRoute(
                 "Default", // Route name
