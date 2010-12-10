@@ -40,6 +40,7 @@ namespace AutoReST.Routing
         {
             HttpVerbs verb = HttpVerbs.Get;
 
+            // TODO: Refactor
             if (action.Name.Equals(ResourceListAction, StringComparison.InvariantCultureIgnoreCase) ||
                 action.Name.Equals(ResourceReadAction, StringComparison.InvariantCultureIgnoreCase) ||
                 (action.Name.Equals(ResourceCreateAction, StringComparison.InvariantCultureIgnoreCase) &&
