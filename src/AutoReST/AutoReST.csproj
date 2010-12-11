@@ -45,6 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonAssemblyInfo.cs" />
+    <Compile Include="Infrastructure\StringExtensions.cs" />
+    <Compile Include="Routing\RouteMapping.cs" />
+    <Compile Include="Routing\RouteConventions.cs" />
     <Compile Include="Infrastructure\ActionInfo.cs" />
     <Compile Include="Infrastructure\ActionParam.cs" />
     <Compile Include="Infrastructure\ControllerParser.cs" />
@@ -52,11 +55,12 @@
     <Compile Include="Infrastructure\IControllerParser.cs" />
     <Compile Include="Infrastructure\IControllerParserConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Routing\ConventionRouteMapping.cs" />
+    <Compile Include="Routing\ConventionRouting.cs" />
     <Compile Include="Routing\RoutingHttpVerbConstraint.cs" />
-    <Compile Include="Routing\IRouteMapping.cs" />
+    <Compile Include="Routing\IRouting.cs" />
     <Compile Include="Routing\RouteGenerator.cs" />
-    <Compile Include="Routing\VerbRouteMapping.cs" />
+    <Compile Include="Routing\VerbRouting.cs" />
+    <Compile Include="Routing\UrlType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

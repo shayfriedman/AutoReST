@@ -9,31 +9,31 @@ namespace AutoReST.Routing
     public class RouteGenerator
     {
         readonly IControllerParser _controllerParser;
-        readonly IRouteMapping _routeMapping;
+        readonly IRouting _routing;
 
-        public RouteGenerator() : this(new VerbRouteMapping())
+        public RouteGenerator() : this(new VerbRouting())
         {
         }
 
-        public RouteGenerator(IRouteMapping routeMapping, IControllerParserConfiguration controllerParserConfiguration)
+        public RouteGenerator(IRouting routing, IControllerParserConfiguration controllerParserConfiguration)
             :
-                this(routeMapping, new ControllerParser(controllerParserConfiguration))
+                this(routing, new ControllerParser(controllerParserConfiguration))
         {
         }
 
         public RouteGenerator(IControllerParserConfiguration controllerParserConfiguration) :
-            this(new VerbRouteMapping(), new ControllerParser(controllerParserConfiguration))
+            this(new VerbRouting(), new ControllerParser(controllerParserConfiguration))
         {
         }
 
-        public RouteGenerator(IRouteMapping routeMapping) :
-            this(routeMapping, new ControllerParser(new ControllerParserConfiguration()))
+        public RouteGenerator(IRouting routing) :
+            this(routing, new ControllerParser(new ControllerParserConfiguration()))
         {
         }
 
-        public RouteGenerator(IRouteMapping routeMapping, IControllerParser controllerParser)
+        public RouteGenerator(IRouting routing, IControllerParser controllerParser)
         {
-            _routeMapping = routeMapping;
+            _routing = routing;
             _controllerParser = controllerParser;
         }
 
@@ -45,11 +45,12 @@ namespace AutoReST.Routing
 
             foreach (ActionInfo action in actions)
             {
+
                 routeCollection.MapRoute(
-                    _routeMapping.GetRouteName(action),
-                    _routeMapping.GetRouteUrl(action),
-                    _routeMapping.GetRouteDefaults(action),
-                    _routeMapping.GetRouteConstraints(action));
+                    _routing.GetRouteName(action),
+                    _routing.GetRouteUrl(action),
+                    new { controller = _routing.GetRouteController(action), action = _routing.GetRouteAction(action)},
+                    new { method = new RoutingHttpVerbConstraint(_routing.GetRouteConstraint(action))});
             }
 
         }

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using AutoReST;
+using AutoReST.Infrastructure;
 using AutoReST.Routing;
 
 namespace SampleApp
@@ -25,9 +26,12 @@ namespace SampleApp
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 
-            var routeGenerator = new RouteGenerator(new VerbRouteMapping());
+            IControllerParserConfiguration parserConfiguration = new ControllerParserConfiguration();
 
-        
+            parserConfiguration.Controllers.Add("EmployeeController");
+
+            var routeGenerator = new RouteGenerator(new ConventionRouting(), parserConfiguration);
+
             routeGenerator.GenerateRoutesFromAssembly(Assembly.GetExecutingAssembly(), routes);
 
             routes.MapRoute(
@@ -44,7 +48,7 @@ namespace SampleApp
             
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            //RouteDebug.RouteDebugger.RewriteRoutesForTesting(RouteTable.Routes);
+            RouteDebug.RouteDebugger.RewriteRoutesForTesting(RouteTable.Routes);
         }
     }
 }

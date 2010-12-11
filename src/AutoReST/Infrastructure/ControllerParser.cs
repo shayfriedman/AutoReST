@@ -31,15 +31,6 @@ namespace AutoReST.Infrastructure
                                       Parameters = action.GetParameters().Select(param => new ActionParam
                                                                                           {
                                                                                               Name = param.Name,
-                                                                                              Type = param.ParameterType,
-                                                                                              IsComplexType =
-                                                                                                  !TypeDescriptor.
-                                                                                                       GetConverter(
-                                                                                                           param.
-                                                                                                               ParameterType)
-                                                                                                       .CanConvertFrom(
-                                                                                                           typeof (
-                                                                                                               string)),
                                                                                           }).ToList(),
                                       Verb = GetActionVerbs(action)
                                   }).ToList();

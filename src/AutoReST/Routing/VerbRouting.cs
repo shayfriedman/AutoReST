@@ -1,36 +1,34 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Mvc;
 using AutoReST.Infrastructure;
 
 namespace AutoReST.Routing
 {
-    public class VerbRouteMapping : IRouteMapping
+    public class VerbRouting : IRouting
     {
-        int _uniqueId;
-
         public bool MapResourceListToPluralController { get; set; }
 
         public string ResourceListAction { get; set; }
 
-        public VerbRouteMapping()
+        public VerbRouting()
         {
             ResourceListAction = "Index";
             MapResourceListToPluralController = true;
         }
 
        
-        public virtual string GetRouteName(ActionInfo action)
+        public string GetRouteName(ActionInfo action)
         {
-            _uniqueId++;
-            return String.Format("{0}.{1}.{2}", action.Controller, action.Name, _uniqueId);
+            return StringHelpers.GetUniqueString(action.Controller, action.Name);
         }
 
-        public virtual string GetRouteUrl(ActionInfo action)
+        public string GetRouteUrl(ActionInfo action)
         {
             if (action.Name.Equals(ResourceListAction, StringComparison.CurrentCultureIgnoreCase) &&
                 MapResourceListToPluralController)
             {
-                return Pluralize(action.Controller);
+                return StringHelpers.Pluralize(action.Controller);
             }
 
             return String.Format("{0}{1}", action.Controller,
@@ -40,19 +38,18 @@ namespace AutoReST.Routing
                                                                                           actionParam.Name + "}"));
         }
 
-        public string Pluralize(string singular)
+        public string GetRouteController(ActionInfo action)
         {
-            return singular + "s";
+            return action.Controller;
         }
 
-        public virtual object GetRouteDefaults(ActionInfo action)
+        public string GetRouteAction(ActionInfo action)
         {
-            return new {controller = action.Controller, action = action.Name};
+            return action.Name;
         }
-
-        public virtual object GetRouteConstraints(ActionInfo action)
+        public HttpVerbs GetRouteConstraint(ActionInfo action)
         {
-            return new {method = new RoutingHttpVerbConstraint(action.Verb)};
+            return action.Verb;
         }
 
        

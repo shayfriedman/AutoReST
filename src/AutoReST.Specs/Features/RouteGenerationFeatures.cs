@@ -13,6 +13,8 @@ namespace AutoReST.Specs.Features
         {
             routeGenerator = new RouteGenerator();
 
+            routes = new RouteCollection();
+
             assembly = Assembly.GetExecutingAssembly();
         };
 
@@ -40,6 +42,8 @@ namespace AutoReST.Specs.Features
 
             controllerParserConfiguration.Namespaces.Add("AutoReST.Specs.Helpers.SpecificNamespace");
 
+            routes = new RouteCollection();
+
             routeGenerator = new RouteGenerator(controllerParserConfiguration);
 
             assembly = Assembly.GetExecutingAssembly();
@@ -63,7 +67,9 @@ namespace AutoReST.Specs.Features
     {
         Establish context = () =>
         { 
-            routeGenerator = new RouteGenerator(new ConventionRouteMapping());
+            routes = new RouteCollection();
+
+            routeGenerator = new RouteGenerator(new ConventionRouting());
 
             
             assembly = Assembly.GetExecutingAssembly();
@@ -71,6 +77,7 @@ namespace AutoReST.Specs.Features
 
         Because of = () =>
         {
+          
             routeGenerator.GenerateRoutesFromAssembly(assembly, routes);
         };
 

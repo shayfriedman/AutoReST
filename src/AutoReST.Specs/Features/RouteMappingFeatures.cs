@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using AutoReST.Infrastructure;
 using AutoReST.Routing;
-using AutoReST.Specs.Helpers;
 using Machine.Specifications;
 
 namespace AutoReST.Specs.Features
@@ -17,14 +16,14 @@ namespace AutoReST.Specs.Features
             actionInfo.Name = "Details";
             actionInfo.Controller = "Customer";
             actionInfo.Verb = HttpVerbs.Get;
-            actionInfo.Parameters = new List<ActionParam> {new ActionParam {Name = "id", Type = typeof (int)}};
+            actionInfo.Parameters = new List<ActionParam> {new ActionParam {Name = "id"}};
 
-            routeMapping = new VerbRouteMapping();
+            routing = new VerbRouting();
         };
 
         Because of = () =>
         {
-            url = routeMapping.GetRouteUrl(actionInfo);
+            url = routing.GetRouteUrl(actionInfo);
         };
 
         It should_return_url_with_single_parameter = () =>
@@ -32,7 +31,7 @@ namespace AutoReST.Specs.Features
             url.ShouldEqual("Customer/{id}");
         };
 
-        static IRouteMapping routeMapping;
+        static IRouting routing;
         static string url;
         static ActionInfo actionInfo;
 
@@ -50,16 +49,16 @@ namespace AutoReST.Specs.Features
             actionInfo.Verb = HttpVerbs.Get;
             actionInfo.Parameters = new List<ActionParam>
                                     {
-                                        new ActionParam {Name = "section", Type = typeof (string)},
-                                        new ActionParam {Name = "id", Type = typeof (int)}
+                                        new ActionParam {Name = "section"},
+                                        new ActionParam {Name = "id"}
                                     };
 
-            routeMapping = new VerbRouteMapping();
+            routing = new VerbRouting();
         };
 
         Because of = () =>
         {
-            url = routeMapping.GetRouteUrl(actionInfo);
+            url = routing.GetRouteUrl(actionInfo);
         };
 
         It should_return_url_with_two_parameters = () =>
@@ -67,7 +66,7 @@ namespace AutoReST.Specs.Features
             url.ShouldEqual("Customer/{section}/{id}");
         };
 
-        static IRouteMapping routeMapping;
+        static IRouting routing;
         static string url;
         static ActionInfo actionInfo;
 
@@ -86,15 +85,15 @@ namespace AutoReST.Specs.Features
             actionInfo.Parameters = new List<ActionParam>
                                     {
                                         new ActionParam
-                                        {Name = "customerRecord", Type = typeof (Customer), IsComplexType = true}
+                                        {Name = "customerRecord", IsComplexType = true}
                                     };
 
-            routeMapping = new VerbRouteMapping();
+            routing = new VerbRouting();
         };
 
         Because of = () =>
         {
-            url = routeMapping.GetRouteUrl(actionInfo);
+            url = routing.GetRouteUrl(actionInfo);
         };
 
         It should_return_url_ignoring_complex_param = () =>
@@ -104,7 +103,7 @@ namespace AutoReST.Specs.Features
 
         static string url;
         static ActionInfo actionInfo;
-        static IRouteMapping routeMapping;
+        static IRouting routing;
 
     }
 
@@ -122,15 +121,15 @@ namespace AutoReST.Specs.Features
             actionInfo.Parameters = new List<ActionParam>
                                     {
                                         new ActionParam
-                                        {Name = "customerRecord", Type = typeof (Customer), IsComplexType = true}
+                                        {Name = "customerRecord", IsComplexType = true}
                                     };
 
-            routeMapping = new ConventionRouteMapping();
+            routing = new ConventionRouting();
         };
 
         Because of = () =>
         {
-            url = routeMapping.GetRouteUrl(actionInfo);
+            url = routing.GetRouteUrl(actionInfo);
         };
 
         It should_return_url_ignoring_complex_param = () =>
@@ -140,7 +139,7 @@ namespace AutoReST.Specs.Features
 
         static string url;
         static ActionInfo actionInfo;
-        static IRouteMapping routeMapping;
+        static IRouting routing;
 
     }
 }
