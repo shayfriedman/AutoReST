@@ -58,7 +58,9 @@ namespace AutoReST.Routing
                            where mapping.ActionName == action.Name
                            select mapping).ToList();
 
-            
+            if (mappings.Count == 0)
+                throw new MappingException(action);
+      
             if (mappings.Count() == 1)
             {
                 return mappings.First();
@@ -68,9 +70,15 @@ namespace AutoReST.Routing
             {
                 if (action.Parameters == null || action.Parameters.Count == 0)
                 {
-                    return (from mapping in mappings
+                    var noParamsMappings = (from mapping in mappings
                            where mapping.ActionParams == null
-                           select mapping).First();
+                           select mapping).ToList();
+
+                    if (noParamsMappings.Count == 0)
+                    {
+                        throw new MappingException(action);
+                    }
+                    return noParamsMappings.First();
                 }
                 var equalParamsMappings = (from mapping in mappings
                                            where mapping.ActionParams != null && mapping.ActionParams.Count == action.Parameters.Count
@@ -93,7 +101,7 @@ namespace AutoReST.Routing
                     
                 }
             }
-            throw new MappingException(String.Format("Mapping not found: {0}.{1} with {2} parameters", action.Controller, action.Name, action.Parameters.Count));
+            throw new MappingException(action);
 
         }
 

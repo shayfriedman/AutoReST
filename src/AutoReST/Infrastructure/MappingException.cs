@@ -5,8 +5,16 @@ namespace AutoReST.Infrastructure
 {
     public class MappingException : Exception
     {
+
+        public ActionInfo ActionInfo { get; private set; }
+
         public MappingException()
         {
+        }
+
+        public MappingException(ActionInfo actionInfo)
+        {
+            ActionInfo = actionInfo;
         }
 
         public MappingException(string message) : base(message)

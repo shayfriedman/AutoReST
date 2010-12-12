@@ -58,7 +58,7 @@
     </Compile>
     <Compile Include="Features\ContentNegotiationFeatures.cs" />
     <Compile Include="Features\ControllerParsingFeatures.cs" />
-    <Compile Include="Features\ConventionRoutingFeatures.cs" />
+    <Compile Include="Features\RouteConventionFeatures.cs" />
     <Compile Include="Features\RouteGenerationFeatures.cs" />
     <Compile Include="Features\RouteMappingFeatures.cs" />
     <Compile Include="Helpers\ActionController.cs" />
