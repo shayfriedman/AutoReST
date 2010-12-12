@@ -56,11 +56,11 @@
     <Compile Include="..\AutoReST\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Features\ContentNegotiationFeatures.cs" />
-    <Compile Include="Features\ControllerParsingFeatures.cs" />
-    <Compile Include="Features\RouteConventionFeatures.cs" />
-    <Compile Include="Features\RouteGenerationFeatures.cs" />
-    <Compile Include="Features\RouteMappingFeatures.cs" />
+    <Compile Include="Specs\ContentNegotiationSpecs.cs" />
+    <Compile Include="Specs\ControllerParsingSpecs.cs" />
+    <Compile Include="Specs\RouteConventionSpecs.cs" />
+    <Compile Include="Specs\RouteGenerationSpecs.cs" />
+    <Compile Include="Specs\RouteMappingSpecs.cs" />
     <Compile Include="Helpers\ActionController.cs" />
     <Compile Include="Helpers\ActionlessController.cs" />
     <Compile Include="Helpers\ConventionController.cs" />
