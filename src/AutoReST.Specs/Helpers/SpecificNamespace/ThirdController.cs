@@ -4,7 +4,7 @@ namespace AutoReST.Specs.Helpers.SpecificNamespace
 {
     public class ThirdController : Controller
     {
-        public ActionResult ThirdCreate()
+        public ActionResult Create()
         {
             return View();
         }

@@ -19,7 +19,7 @@ namespace AutoReST.Specs.Helpers
             return View();
         }
 
-        public ActionResult Update()
+        public ActionResult Update(int id)
         {
             return View();
         }

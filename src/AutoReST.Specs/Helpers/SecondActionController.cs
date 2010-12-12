@@ -4,7 +4,7 @@ namespace AutoReST.Specs.Helpers
 {
     public class SecondActionController : Controller
     {
-        public ActionResult SecondCreate()
+        public ActionResult Create()
         {
             return View();
         }
