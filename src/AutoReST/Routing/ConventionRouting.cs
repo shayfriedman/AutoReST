@@ -13,44 +13,8 @@ namespace AutoReST.Routing
 
         public ConventionRouting()
         {
-            _routeConventions = new RouteConventions();
+            _routeConventions = new DefaultRouteConventions();
 
-            _routeConventions.MapAction("List").ToRootPlural().ConstraintToVerb(HttpVerbs.Get);
-            
-            _routeConventions.MapAction("Details").WithParameters(
-                new List<ActionParam>() { new ActionParam() { IsComplexType = false, Name = "id"}}
-                
-                
-                ).ToRoot().ConstraintToVerb(HttpVerbs.Get);
-
-            _routeConventions.MapAction("Delete").WithParameters(
-                new List<ActionParam>() { new ActionParam() { IsComplexType = false, Name = "id"}}
-                
-                
-                ).ToRoot().ConstraintToVerb(HttpVerbs.Delete);
-
-            _routeConventions.MapAction("Update").WithParameters(
-                new List<ActionParam>() { new ActionParam() { IsComplexType = false, Name = "id"}}
-                
-                
-                ).ToCustomUrl("/edit").ConstraintToVerb(HttpVerbs.Get);
-
-            _routeConventions.MapAction("Update").WithParameters(
-                new List<ActionParam>()
-                {
-                    new ActionParam() { IsComplexType = false, Name = "id"},
-                    new ActionParam() { IsComplexType = true, Name = "employee"}
-                }
-
-
-                ).ToRoot().ConstraintToVerb(HttpVerbs.Put);
-            
-            _routeConventions.MapAction("Create").WithNoParameters().ToCustomUrl("/new").ConstraintToVerb(HttpVerbs.Get);
-            
-            _routeConventions.MapAction("Create").WithParameters(new List<ActionParam>()
-                {
-                    new ActionParam() { IsComplexType = true, Name = "Employee"}
-                }).ToRoot().ConstraintToVerb(HttpVerbs.Post);
         }
 
         public ConventionRouting(RouteConventions routeConventions)
@@ -89,7 +53,7 @@ namespace AutoReST.Routing
 
         RouteMapping GetMappingByNameAndParameters(ActionInfo action)
         {
-            // TODO: Refactor this to simplify it.
+            // TODO: Refactor this to simplify it. 
             var mappings = (from mapping in _routeConventions.Mappings
                            where mapping.ActionName == action.Name
                            select mapping).ToList();
