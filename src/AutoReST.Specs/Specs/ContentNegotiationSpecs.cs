@@ -1,0 +1,4 @@
+namespace AutoReST.Specs.Features
+{
+   
+}
