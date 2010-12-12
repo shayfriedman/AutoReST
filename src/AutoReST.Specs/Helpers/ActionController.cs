@@ -10,7 +10,7 @@ namespace AutoReST.Specs.Helpers
         }
 
         [HttpPost]
-        public ActionResult Create(Customer customer)
+        public ActionResult Create(Customer data)
         {
             return View();
         }
@@ -27,7 +27,7 @@ namespace AutoReST.Specs.Helpers
         }
 
         [HttpPut]
-        public ActionResult Update(Customer customer)
+        public ActionResult Update(Customer data)
         {
             return View();
         }

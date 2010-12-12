@@ -33,7 +33,7 @@ namespace AutoReST.Routing
                 new List<ActionParam>()
                 {
                     new ActionParam() { IsComplexType = false, Name = "id"},
-                    new ActionParam() { IsComplexType = true, Name = "employee"}
+                    new ActionParam() { IsComplexType = true, Name = "data"}
                 }
 
 
@@ -43,7 +43,7 @@ namespace AutoReST.Routing
 
             MapAction("Create").WithParameters(new List<ActionParam>()
                 {
-                    new ActionParam() { IsComplexType = true, Name = "Employee"}
+                    new ActionParam() { IsComplexType = true, Name = "data"}
                 }).ToRoot().ConstraintToVerb(HttpVerbs.Post);
   
         }

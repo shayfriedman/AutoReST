@@ -49,7 +49,7 @@ namespace AutoReST.Specs.Features
                                                 new ActionParam()
                                                 {Name = "id", IsComplexType = false},
                                                 new ActionParam()
-                                                {Name = "employee", IsComplexType = true}
+                                                {Name = "data", IsComplexType = true}
                                                                                                       
                                             }
             };
@@ -67,7 +67,7 @@ namespace AutoReST.Specs.Features
                                             {
 
                                                 new ActionParam()
-                                                {Name = "Employee", IsComplexType = true}
+                                                {Name = "data", IsComplexType = true}
                                                                                                       
                                             }
             };
