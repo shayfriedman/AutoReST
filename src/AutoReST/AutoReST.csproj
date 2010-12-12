@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonAssemblyInfo.cs" />
+    <Compile Include="Infrastructure\MappingException.cs" />
     <Compile Include="Infrastructure\StringExtensions.cs" />
     <Compile Include="Routing\RouteMapping.cs" />
     <Compile Include="Routing\RouteConventions.cs" />

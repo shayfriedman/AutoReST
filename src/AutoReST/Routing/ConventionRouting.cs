@@ -23,6 +23,12 @@ namespace AutoReST.Routing
                 
                 ).ToRoot().ConstraintToVerb(HttpVerbs.Get);
 
+            _routeConventions.MapAction("Delete").WithParameters(
+                new List<ActionParam>() { new ActionParam() { IsComplexType = false, Name = "id"}}
+                
+                
+                ).ToRoot().ConstraintToVerb(HttpVerbs.Delete);
+
             _routeConventions.MapAction("Update").WithParameters(
                 new List<ActionParam>() { new ActionParam() { IsComplexType = false, Name = "id"}}
                 
@@ -83,28 +89,47 @@ namespace AutoReST.Routing
 
         RouteMapping GetMappingByNameAndParameters(ActionInfo action)
         {
-            foreach(var m in _routeConventions.Mappings)
+            // TODO: Refactor this to simplify it.
+            var mappings = (from mapping in _routeConventions.Mappings
+                           where mapping.ActionName == action.Name
+                           select mapping).ToList();
+
+            
+            if (mappings.Count() == 1)
             {
-                if (m.ActionName == action.Name)
+                return mappings.First();
+            }
+
+            if (mappings.Count() > 1)
+            {
+                if (action.Parameters == null || action.Parameters.Count == 0)
                 {
-                    if (m.ActionParams != null && action.Parameters != null)
+                    return (from mapping in mappings
+                           where mapping.ActionParams == null
+                           select mapping).First();
+                }
+                var equalParamsMappings = (from mapping in mappings
+                                           where mapping.ActionParams != null && mapping.ActionParams.Count == action.Parameters.Count
+                                           select mapping).ToList();
+          
+                foreach (var mapping in equalParamsMappings)
+                {
+                    var equalParams = 0;
+
+                    foreach (var found in
+                        mapping.ActionParams.Select(mappingParam => action.Parameters.Any(actionParam => mappingParam != actionParam)).Where(found => found))
                     {
-                        if (m.ActionParams.Count == action.Parameters.Count)
-                        {
-                            foreach(var p in m.ActionParams)
-                            {
-                                if (!action.Parameters.Contains(p))
-                                {
-                                    break;
-                                }
-                            }
-                            return m;
-                        }
+                        equalParams++;
+                        continue;
                     }
-                    return m;
+                    if (mapping.ActionParams.Count == equalParams)
+                    {
+                        return mapping;
+                    }
+                    
                 }
             }
-            throw new InvalidOperationException("Mapping not found");
+            throw new MappingException(String.Format("Mapping not found: {0}.{1} with {2} parameters", action.Controller, action.Name, action.Parameters.Count));
 
         }
 

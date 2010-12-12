@@ -16,7 +16,14 @@ namespace AutoReST.Specs.Features
             conventions = new ConventionRouting();
 
             listAction = new ActionInfo() { Controller = "Employee", Name = "List" };
+
             detailsAction = new ActionInfo() { Controller = "Employee", Name = "Details", Parameters = new List<ActionParam>()
+                                                                                                       {
+                              
+                                                                                                           new ActionParam() { Name = "id"}
+                                                                                                       }};
+
+            deleteAction = new ActionInfo() { Controller = "Employee", Name = "Delete", Parameters = new List<ActionParam>()
                                                                                                        {
                               
                                                                                                            new ActionParam() { Name = "id"}
@@ -60,8 +67,6 @@ namespace AutoReST.Specs.Features
                                             {
 
                                                 new ActionParam()
-                                                {Name = "id", IsComplexType = false},
-                                                new ActionParam()
                                                 {Name = "Employee", IsComplexType = true}
                                                                                                       
                                             }
@@ -76,6 +81,7 @@ namespace AutoReST.Specs.Features
         protected static ActionInfo updateAction;
         protected static ActionInfo createDisplayAction;
         protected static ActionInfo createAction;
+        protected static ActionInfo deleteAction;
     }
 
     [Subject("Route Conventions")]
@@ -295,7 +301,7 @@ namespace AutoReST.Specs.Features
             controller.ShouldEqual("Employee");
         };
 
-        It should_return_action_Update = () =>
+        It should_return_action_Create = () =>
         {
             action.ShouldEqual("Create");
         };
@@ -312,6 +318,44 @@ namespace AutoReST.Specs.Features
         static HttpVerbs verb;
     }
 
+    [Subject("Route Conventions")]
+    public class when_getting_information_for_delete_action_with_default_conventions : DefaultConventions
+    {
+        Because of = () =>
+        {
+            url = conventions.GetRouteUrl(deleteAction);
+            controller = conventions.GetRouteController(deleteAction);
+            action = conventions.GetRouteAction(deleteAction);
+            verb = conventions.GetRouteConstraint(deleteAction);
+
+        };
+
+        It should_return_url_as_controller_with_id_parameter = () =>
+        {
+            url.ShouldEqual("Employee/{id}");
+        };
+
+        It should_return_controller_as_name_of_controller = () =>
+        {
+            controller.ShouldEqual("Employee");
+        };
+
+        It should_return_action_Delete = () =>
+        {
+            action.ShouldEqual("Delete");
+        };
+
+        It should_return_verb_as_get = () =>
+        {
+            verb.ShouldEqual(HttpVerbs.Delete);
+        };
+
+
+        static string url;
+        static string controller;
+        static string action;
+        static HttpVerbs verb;
+    }
 
 
 
