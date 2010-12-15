@@ -19,12 +19,12 @@ namespace AutoReST.Specs.Helpers
             return View();
         }
 
-        public ActionResult Update(int id)
+        public ActionResult Edit(int id)
         {
             return View();
         }
 
-        public ActionResult Update(Customer data)
+        public ActionResult Edit(Customer data)
         {
             return View();
         }

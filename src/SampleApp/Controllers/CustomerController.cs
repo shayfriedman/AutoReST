@@ -49,7 +49,7 @@ namespace SampleApp.Controllers
             return View();
         }
 
-        public ActionResult Edit(Customer customer)
+        public ActionResult Edit(int id, Customer customer)
         {
             try
             {

@@ -121,10 +121,10 @@ namespace AutoReST.Specs.Specs
             actionInfo.Parameters = new List<ActionParam>
                                     {
                                         new ActionParam
-                                        {Name = "customerRecord", IsComplexType = true}
+                                        {Name = "data", IsComplexType = true}
                                     };
 
-            routing = new ConventionRouting();
+            routing = new ConventionRouting(new DefaultRouteConventions());
         };
 
         Because of = () =>

@@ -2,9 +2,9 @@
 
 namespace AutoReST.Infrastructure
 {
-    public class ControllerParserConfiguration : IControllerParserConfiguration
+    public class DefaultControllerFinderConfiguration : IControllerFinderConfiguration
     {
-        public ControllerParserConfiguration()
+        public DefaultControllerFinderConfiguration()
         {
             Namespaces = new List<string>();
             Controllers = new List<string>();

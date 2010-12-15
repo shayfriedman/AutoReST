@@ -1,3 +1,4 @@
+using System;
 using System.Web.Mvc;
 using AutoReST.Specs.Helpers;
 
@@ -23,7 +24,7 @@ namespace SampleApp.Controllers
             return View();
         }
 
-        public ActionResult Create(Employee customer)
+        public ActionResult Create(Employee data)
         {
             try
             {
@@ -43,7 +44,7 @@ namespace SampleApp.Controllers
             return View();
         }
 
-        public ActionResult Edit(Customer customer)
+        public ActionResult Edit(int id, Employee data)
         {
             try
             {
@@ -56,6 +57,7 @@ namespace SampleApp.Controllers
                 return View();
             }
         }
+
 
         public ActionResult Delete(int id)
         {

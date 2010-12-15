@@ -23,13 +23,13 @@ namespace AutoReST.Routing
 
                 ).ToRoot().ConstraintToVerb(HttpVerbs.Delete);
 
-            MapAction("Update").WithParameters(
+            MapAction("Edit").WithParameters(
                 new List<ActionParam>() { new ActionParam() { IsComplexType = false, Name = "id" } }
 
 
                 ).ToCustomUrl("/edit").ConstraintToVerb(HttpVerbs.Get);
 
-            MapAction("Update").WithParameters(
+            MapAction("Edit").WithParameters(
                 new List<ActionParam>()
                 {
                     new ActionParam() { IsComplexType = false, Name = "id"},

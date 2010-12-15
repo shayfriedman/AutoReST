@@ -26,11 +26,8 @@ namespace SampleApp
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 
-            IControllerParserConfiguration parserConfiguration = new ControllerParserConfiguration();
 
-            parserConfiguration.Controllers.Add("EmployeeController");
-
-            var routeGenerator = new RouteGenerator(new ConventionRouting(), parserConfiguration);
+            var routeGenerator = new RouteGenerator();
 
             routeGenerator.GenerateRoutesFromAssembly(Assembly.GetExecutingAssembly(), routes);
 

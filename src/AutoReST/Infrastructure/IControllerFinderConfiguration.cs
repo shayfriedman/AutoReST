@@ -2,7 +2,7 @@
 
 namespace AutoReST.Infrastructure
 {
-    public interface IControllerParserConfiguration
+    public interface IControllerFinderConfiguration
     {
         IList<string> Namespaces { get; set; }
         IList<string> Controllers { get; set; }

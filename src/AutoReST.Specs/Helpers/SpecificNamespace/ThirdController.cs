@@ -8,5 +8,12 @@ namespace AutoReST.Specs.Helpers.SpecificNamespace
         {
             return View();
         }
+
+        public ActionResult Create(Customer data)
+        {
+            return View();
+        }
+
+
     }
 }

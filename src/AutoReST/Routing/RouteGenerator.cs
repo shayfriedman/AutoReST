@@ -8,39 +8,28 @@ namespace AutoReST.Routing
 {
     public class RouteGenerator
     {
-        readonly IControllerParser _controllerParser;
+        readonly IControllerFinder _controllerFinder;
+        readonly IActionFinder _actionFinder;
         readonly IRouting _routing;
 
-        public RouteGenerator() : this(new VerbRouting())
+        public RouteGenerator() : this(new ConventionRouting(new DefaultRouteConventions()),
+            new ControllerFinder(new DefaultControllerFinderConfiguration()), new ActionFinder())
         {
         }
 
-        public RouteGenerator(IRouting routing, IControllerParserConfiguration controllerParserConfiguration)
-            :
-                this(routing, new ControllerParser(controllerParserConfiguration))
-        {
-        }
-
-        public RouteGenerator(IControllerParserConfiguration controllerParserConfiguration) :
-            this(new VerbRouting(), new ControllerParser(controllerParserConfiguration))
-        {
-        }
-
-        public RouteGenerator(IRouting routing) :
-            this(routing, new ControllerParser(new ControllerParserConfiguration()))
-        {
-        }
-
-        public RouteGenerator(IRouting routing, IControllerParser controllerParser)
+        public RouteGenerator(IRouting routing, IControllerFinder controllerFinder, IActionFinder actionFinder)
         {
             _routing = routing;
-            _controllerParser = controllerParser;
+            _actionFinder = actionFinder;
+            _controllerFinder = controllerFinder;
         }
 
         public void GenerateRoutesFromAssembly(Assembly assembly, RouteCollection routeCollection)
         {
-       
-            IList<ActionInfo> actions = _controllerParser.GetActions(assembly);
+
+            var controllers = _controllerFinder.GetControllers(assembly);
+
+            IList<ActionInfo> actions = _actionFinder.GetActions(controllers);
 
 
             foreach (ActionInfo action in actions)

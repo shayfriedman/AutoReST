@@ -25,7 +25,7 @@ namespace AutoReST.Specs.Specs
 
         It should_return_routing_collection_with_rest_routes = () =>
         {
-            routes.Count.ShouldEqual(12);
+            routes.Count.ShouldEqual(13);
         };
 
         static RouteCollection routes;
@@ -33,18 +33,20 @@ namespace AutoReST.Specs.Specs
         static Assembly assembly;
 
     }
+
+    
     [Subject("Route Generation")]
     public class when_generating_rest_routing_based_on_verbs_given_assembly_and_custom_namespaces
     {
         Establish context = () =>
         {
-            IControllerParserConfiguration controllerParserConfiguration = new ControllerParserConfiguration();
+            IControllerFinderConfiguration controllerFinderConfiguration = new DefaultControllerFinderConfiguration();
 
-            controllerParserConfiguration.Namespaces.Add("AutoReST.Specs.Helpers.SpecificNamespace");
+            controllerFinderConfiguration.Namespaces.Add("AutoReST.Specs.Helpers.SpecificNamespace");
 
             routes = new RouteCollection();
 
-            routeGenerator = new RouteGenerator(controllerParserConfiguration);
+            routeGenerator = new RouteGenerator(new VerbRouting(), new ControllerFinder(controllerFinderConfiguration), new ActionFinder());
 
             assembly = Assembly.GetExecutingAssembly();
         };
@@ -54,7 +56,7 @@ namespace AutoReST.Specs.Specs
             routeGenerator.GenerateRoutesFromAssembly(assembly, routes);
         };
 
-        It should_return_routing_collection_with_rest_routes = () => routes.Count.ShouldEqual(1);
+        It should_return_routing_collection_with_rest_routes = () => routes.Count.ShouldEqual(2);
 
         static RouteCollection routes;
         static RouteGenerator routeGenerator;
@@ -69,7 +71,7 @@ namespace AutoReST.Specs.Specs
         { 
             routes = new RouteCollection();
 
-            routeGenerator = new RouteGenerator(new ConventionRouting());
+            routeGenerator = new RouteGenerator();
 
             
             assembly = Assembly.GetExecutingAssembly();
@@ -81,7 +83,7 @@ namespace AutoReST.Specs.Specs
             routeGenerator.GenerateRoutesFromAssembly(assembly, routes);
         };
 
-        It should_return_routing_collection_with_rest_routes = () => routes.Count.ShouldEqual(12);
+        It should_return_routing_collection_with_rest_routes = () => routes.Count.ShouldEqual(13);
  
         static RouteCollection routes;
         static RouteGenerator routeGenerator;

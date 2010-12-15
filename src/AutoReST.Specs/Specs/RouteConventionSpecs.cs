@@ -8,11 +8,11 @@ using Machine.Specifications;
 namespace AutoReST.Specs.Specs
 {
 
-    public class DefaultConventions
+    public class DefaultConventionsSpecs
     {
         Establish context = () =>
         {
-            conventionRouting = new ConventionRouting();
+            conventionRouting = new ConventionRouting(new DefaultRouteConventions());
 
             listAction = new ActionInfo() { Controller = "Employee", Name = "List" };
 
@@ -27,10 +27,10 @@ namespace AutoReST.Specs.Specs
                               
                                                                                                            new ActionParam() { Name = "id"}
                                                                                                        }};
-            updateDisplayAction = new ActionInfo()
+            editDisplayAction = new ActionInfo()
                                   {
                                       Controller = "Employee",
-                                      Name = "Update",
+                                      Name = "Edit",
                                       Parameters = new List<ActionParam>()
                                                    {
 
@@ -38,10 +38,10 @@ namespace AutoReST.Specs.Specs
                                                    }
                                   };
 
-            updateAction = new ActionInfo()
+            editAction = new ActionInfo()
                            {
                                Controller = "Employee",
-                               Name = "Update",
+                               Name = "Edit",
                                Parameters = new List<ActionParam>()
                                             {
 
@@ -76,15 +76,15 @@ namespace AutoReST.Specs.Specs
         protected static ConventionRouting conventionRouting;
         protected static ActionInfo listAction;
         protected static ActionInfo detailsAction;
-        protected static ActionInfo updateDisplayAction;
-        protected static ActionInfo updateAction;
+        protected static ActionInfo editDisplayAction;
+        protected static ActionInfo editAction;
         protected static ActionInfo createDisplayAction;
         protected static ActionInfo createAction;
         protected static ActionInfo deleteAction;
     }
 
     [Subject("Route Conventions")]
-    public class when_getting_information_for_list_action_with_default_conventions: DefaultConventions
+    public class when_getting_information_for_list_action_with_default_conventions: DefaultConventionsSpecs
     {
         Because of = () =>
         {
@@ -123,7 +123,7 @@ namespace AutoReST.Specs.Specs
     }
 
     [Subject("Route Conventions")]
-    public class when_getting_information_for_details_action_with_default_conventions : DefaultConventions
+    public class when_getting_information_for_details_action_with_default_conventions : DefaultConventionsSpecs
     {
         Because of = () =>
         {
@@ -162,14 +162,14 @@ namespace AutoReST.Specs.Specs
     }
 
     [Subject("Route Conventions")]
-    public class when_getting_information_for_update_display_action_with_default_conventions : DefaultConventions
+    public class when_getting_information_for_Edit_display_action_with_default_conventions : DefaultConventionsSpecs
     {
         Because of = () =>
         {
-            url = conventionRouting.GetRouteUrl(updateDisplayAction);
-            controller = conventionRouting.GetRouteController(updateDisplayAction);
-            action = conventionRouting.GetRouteAction(updateDisplayAction);
-            verb = conventionRouting.GetRouteConstraint(updateDisplayAction);
+            url = conventionRouting.GetRouteUrl(editDisplayAction);
+            controller = conventionRouting.GetRouteController(editDisplayAction);
+            action = conventionRouting.GetRouteAction(editDisplayAction);
+            verb = conventionRouting.GetRouteConstraint(editDisplayAction);
 
         };
 
@@ -183,9 +183,9 @@ namespace AutoReST.Specs.Specs
             controller.ShouldEqual("Employee");
         };
 
-        It should_return_action_Update = () =>
+        It should_return_action_Edit = () =>
         {
-            action.ShouldEqual("Update");
+            action.ShouldEqual("Edit");
         };
 
         It should_return_verb_as_Get = () =>
@@ -201,14 +201,14 @@ namespace AutoReST.Specs.Specs
     }
 
     [Subject("Route Conventions")]
-    public class when_getting_information_for_update_action_with_default_conventions : DefaultConventions
+    public class when_getting_information_for_edit_action_with_default_conventions : DefaultConventionsSpecs
     {
         Because of = () =>
         {
-            url = conventionRouting.GetRouteUrl(updateAction);
-            controller = conventionRouting.GetRouteController(updateAction);
-            action = conventionRouting.GetRouteAction(updateAction);
-            verb = conventionRouting.GetRouteConstraint(updateAction);
+            url = conventionRouting.GetRouteUrl(editAction);
+            controller = conventionRouting.GetRouteController(editAction);
+            action = conventionRouting.GetRouteAction(editAction);
+            verb = conventionRouting.GetRouteConstraint(editAction);
 
         };
 
@@ -222,9 +222,9 @@ namespace AutoReST.Specs.Specs
             controller.ShouldEqual("Employee");
         };
 
-        It should_return_action_Update = () =>
+        It should_return_action_Edit = () =>
         {
-            action.ShouldEqual("Update");
+            action.ShouldEqual("Edit");
         };
 
         It should_return_verb_as_Put = () =>
@@ -240,7 +240,7 @@ namespace AutoReST.Specs.Specs
     }
 
     [Subject("Route Conventions")]
-    public class when_getting_information_for_create_display_action_with_default_conventions : DefaultConventions
+    public class when_getting_information_for_create_display_action_with_default_conventions : DefaultConventionsSpecs
     {
         Because of = () =>
         {
@@ -279,7 +279,7 @@ namespace AutoReST.Specs.Specs
     }
 
     [Subject("Route Conventions")]
-    public class when_getting_information_for_create_action_with_default_conventions : DefaultConventions
+    public class when_getting_information_for_create_action_with_default_conventions : DefaultConventionsSpecs
     {
         Because of = () =>
         {
@@ -318,7 +318,7 @@ namespace AutoReST.Specs.Specs
     }
 
     [Subject("Route Conventions")]
-    public class when_getting_information_for_delete_action_with_default_conventions : DefaultConventions
+    public class when_getting_information_for_delete_action_with_default_conventions : DefaultConventionsSpecs
     {
         Because of = () =>
         {
@@ -358,7 +358,7 @@ namespace AutoReST.Specs.Specs
 
 
     [Subject("Route Conventions")]
-    public class when_getting_url_for_non_existent_action_with_default_conventions: DefaultConventions
+    public class when_getting_url_for_non_existent_action_with_default_conventions: DefaultConventionsSpecs
     {
  
         Because of = () =>
@@ -383,7 +383,7 @@ namespace AutoReST.Specs.Specs
     }
 
     [Subject("Route Conventions")]
-    public class when_getting_url_for_action_with_mismatched_parameters_with_default_conventions: DefaultConventions
+    public class when_getting_url_for_action_with_mismatched_parameters_with_default_conventions: DefaultConventionsSpecs
     {
  
         Because of = () =>
@@ -405,6 +405,68 @@ namespace AutoReST.Specs.Specs
             actionInfo.Controller.ShouldEqual("Employee");
         };
         static Exception exception;
+    }
+
+    [Subject("Route Conventions")]
+    public class when_getting_url_for_action_with_convention_with_three_mappings_of_same_action_name
+    {
+
+        Establish context = () =>
+        {
+
+            var conventions = new RouteConventions();
+
+            conventions.MapAction("Edit").WithParameters(
+                new List<ActionParam>() { new ActionParam() { IsComplexType = false, Name = "id" } }
+
+
+                ).ToCustomUrl("/edit").ConstraintToVerb(HttpVerbs.Get);
+
+            conventions.MapAction("Edit").WithParameters(
+                new List<ActionParam>() { new ActionParam() { IsComplexType = false, Name = "date" } }
+
+
+                ).ToCustomUrl("/edit").ConstraintToVerb(HttpVerbs.Get);
+
+            conventions.MapAction("Edit").WithParameters(
+                new List<ActionParam>()
+                {
+                    new ActionParam() { IsComplexType = false, Name = "id"},
+                    new ActionParam() { IsComplexType = true, Name = "data"}
+                }
+
+
+                ).ToRoot().ConstraintToVerb(HttpVerbs.Put);
+
+            action = new ActionInfo()
+            {
+                Controller = "Employee",
+                Name = "Edit",
+                Parameters = new List<ActionParam>()
+                                                   {
+
+                                                       new ActionParam() {Name = "date"}
+                                                   }
+            };
+
+
+            routingConvention = new ConventionRouting(conventions);
+
+        };
+        Because of = () =>
+        {
+            url = routingConvention.GetRouteUrl(action);
+        };
+
+        
+        It should_return_mapping_not_found_exception = () =>
+        {
+            url.ShouldEqual("Employee/edit/{date}");
+        };
+        static Exception exception;
+        static string url;
+        static ConventionRouting routingConvention;
+        static ActionInfo action;
     }
 
 

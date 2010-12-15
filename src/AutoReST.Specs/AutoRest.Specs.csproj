@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="Specs\ContentNegotiationSpecs.cs" />
     <Compile Include="Specs\ControllerParsingSpecs.cs" />
+    <Compile Include="Specs\FindingControllersSpecs.cs" />
     <Compile Include="Specs\RouteConventionSpecs.cs" />
     <Compile Include="Specs\RouteGenerationSpecs.cs" />
     <Compile Include="Specs\RouteMappingSpecs.cs" />

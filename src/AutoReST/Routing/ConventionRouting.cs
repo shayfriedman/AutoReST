@@ -11,12 +11,6 @@ namespace AutoReST.Routing
     {
         readonly RouteConventions _routeConventions;
 
-        public ConventionRouting()
-        {
-            _routeConventions = new DefaultRouteConventions();
-
-        }
-
         public ConventionRouting(RouteConventions routeConventions)
         {
             _routeConventions = routeConventions;

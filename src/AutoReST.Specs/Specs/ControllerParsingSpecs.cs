@@ -1,45 +1,54 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Mvc;
 using AutoReST.Infrastructure;
 using AutoReST.Specs.Helpers;
+using AutoReST.Specs.Helpers.SpecificNamespace;
 using Machine.Specifications;
 
 namespace AutoReST.Specs.Specs
 {
-    [Subject("Parsing Controllers")]
-    public class when_parsing_a_controller_with_no_actions
+    [Subject("Action Finder")]
+    public class when_getting_actions_for_controllerless_action
     {
         Establish context = () =>
         {
-            controllerParser = new ControllerParser(new ControllerParserConfiguration());
+            actionFinder = new ActionFinder();
+            controllerList = new List<Type> { typeof(ActionlessController) };
         };
 
         Because of = () =>
         {
-            actions = controllerParser.GetActions(typeof (ActionlessController));
+
+            actions = actionFinder.GetActions(controllerList);
         };
 
-        It should_return_null = () =>
+        It should_return_0_actions = () =>
         {
             actions.Count.ShouldEqual(0);
         };
 
         static IList<ActionInfo> actions;
-        static IControllerParser controllerParser;
+        static IActionFinder actionFinder;
+        static List<Type> controllerList;
     }
 
-    [Subject("Parsing Controllers")]
-    public class when_parsing_a_controller_with_actions
+    [Subject("Action Finder")]
+    public class when_getting_actions_for_a_controller_with_actions
     {
         Establish context = () =>
         {
-            controllerParser = new ControllerParser(new ControllerParserConfiguration());
+            actionFinder = new ActionFinder();
+
+            controllerList = new List<Type> { typeof(ActionController) };
         };
 
         Because of = () =>
         {
-            actions = controllerParser.GetActions(typeof (ActionController));
+
+            actions = actionFinder.GetActions(controllerList);
         };
 
         It should_return_all_actions_of_the_controller = () =>
@@ -51,89 +60,41 @@ namespace AutoReST.Specs.Specs
             actions[1].Verb.ShouldEqual(HttpVerbs.Post);
             actions[2].Name.ShouldEqual("Delete");
             actions[2].Verb.ShouldEqual(HttpVerbs.Delete);
-            actions[3].Name.ShouldEqual("Update");
+            actions[3].Name.ShouldEqual("Edit");
             actions[3].Verb.ShouldEqual(HttpVerbs.Get);
-            actions[4].Name.ShouldEqual("Update");
+            actions[4].Name.ShouldEqual("Edit");
             actions[4].Verb.ShouldEqual(HttpVerbs.Put);
         };
 
         static IList<ActionInfo> actions;
-        static IControllerParser controllerParser;
+        static IActionFinder actionFinder;
+        static List<Type> controllerList;
     }
 
-    [Subject("Parsing Controllers")]
-    public class when_parsing_an_assembly_of_controllers
+    [Subject("Finding Actions")]
+    public class when_getting_actions_for_a_controller_with_a_complex_parameter
     {
         Establish context = () =>
         {
-            controllerParser = new ControllerParser(new ControllerParserConfiguration());
+            actionFinder = new ActionFinder();
+
+            controllerList = new List<Type> { typeof(ThirdController) };
         };
 
         Because of = () =>
         {
-            actions = controllerParser.GetActions(Assembly.GetExecutingAssembly());
+            actions = actionFinder.GetActions(controllerList);
         };
 
-        It should_return_all_actions_of_all_controllers = () => { actions.Count.ShouldEqual(12); };
-
-        static IList<ActionInfo> actions;
-        static IControllerParser controllerParser;
-    }
-
-    [Subject("Parsing Controllers")]
-    public class when_parsing_an_assembly_of_controllers_with_filtered_namespaces
-    {
-        Establish context = () =>
+        It should_contains_a_list_of_parameters_with_IsComplexType_set_to_true_for_the_complex_parameter = () =>
         {
-            IControllerParserConfiguration controllerParserConfiguration = new ControllerParserConfiguration();
-
-            controllerParserConfiguration.Namespaces.Add("AutoReST.Specs.Helpers.SpecificNamespace");
-
-            controllerParser = new ControllerParser(controllerParserConfiguration);
-        };
-
-        Because of = () =>
-        {
-            actions = controllerParser.GetActions(Assembly.GetExecutingAssembly());
-        };
-
-        It should_return_all_actions_of_all_controllers_defined_in_the_namespaces = () =>
-        {
-            actions.Count.ShouldEqual(1);
-        };
-
-        
-        static IList<ActionInfo> actions;
-        static IControllerParser controllerParser;
-
-    }
-
-    [Subject("Parsing Controllers")]
-    public class when_parsing_an_assembly_of_controllers_with_specific_controllers
-    {
-        Establish context = () =>
-        {
-            IControllerParserConfiguration controllerParserConfiguration = new ControllerParserConfiguration();
-
-            controllerParserConfiguration.Controllers.Add("ConventionController");
-
-            controllerParser = new ControllerParser(controllerParserConfiguration);
-        };
-
-        Because of = () =>
-        {
-            actions = controllerParser.GetActions(Assembly.GetExecutingAssembly());
-        };
-
-        It should_return_all_actions_of_only_specified_controllers = () =>
-        {
-            actions.Count.ShouldEqual(5);
+            actions[1].Parameters[0].IsComplexType.ShouldBeTrue();
         };
 
 
         static IList<ActionInfo> actions;
-        static IControllerParser controllerParser;
-
+        static IActionFinder actionFinder;
+        static List<Type> controllerList;
     }
 
 }
