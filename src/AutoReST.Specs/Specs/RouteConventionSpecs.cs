@@ -364,7 +364,7 @@ namespace AutoReST.Specs.Specs
         Because of = () =>
         {
 
-            var nonExistentAction = new ActionInfo() { Controller = "Employee", Name = "DoesNotExist" };
+            nonExistentAction = new ActionInfo() { Controller = "Employee", Name = "DoesNotExist" };
 
             exception = Catch.Exception(() => conventionRouting.GetRouteUrl(nonExistentAction));
             
@@ -373,13 +373,26 @@ namespace AutoReST.Specs.Specs
         It should_return_mapping_not_found_exception = () =>
         {
             exception.ShouldBeOfType(typeof(MappingException));
+        };
 
+        It should_return_exception_message_with_controller_action_and_parameters = () =>
+        {
+
+            exception.Message.ShouldEqual(
+                String.Format(
+                    "Mapping for {0}.{1} with {2} parameters not found. Make sure you have your Conventions correctly in place",
+                    nonExistentAction.Controller, nonExistentAction.Name, 0));
+        };
+
+        It should_return_actionInfo_with_correct_controller_and_action = () =>
+        {
             var actionInfo = ((MappingException) exception).ActionInfo;
             
             actionInfo.Name.ShouldEqual("DoesNotExist");
             actionInfo.Controller.ShouldEqual("Employee");
         };
         static Exception exception;
+        static ActionInfo nonExistentAction;
     }
 
     [Subject("Route Conventions")]
