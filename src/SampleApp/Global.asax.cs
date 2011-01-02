@@ -38,6 +38,7 @@ using System.Web.Routing;
 using AutoReST;
 using AutoReST.Infrastructure;
 using AutoReST.Routing;
+using AutoReST.Filters;
 
 namespace SampleApp
 {
@@ -48,24 +49,26 @@ namespace SampleApp
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+			
             filters.Add(new HandleErrorAttribute());
+			filters.Add(new AutoResultFilter());
         }
 
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-
-
             var routeGenerator = new RouteGenerator();
+
+			routes.MapRoute("Mama", "moo/index", new { controller = "Home", action = "Index" });
 
             routeGenerator.GenerateRoutesFromAssembly(Assembly.GetExecutingAssembly(), routes);
 
-            routes.MapRoute(
-                "Default", // Route name
-                "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
-            );
+			routes.MapRoute(
+				"Default", // Route name
+				"{controller}/{action}/{id}", // URL with parameters
+				new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+				).RouteHandler = new AutoRestRouteHandler(); // This is needed only if the user uses custom routes
 
         }
 
@@ -75,7 +78,7 @@ namespace SampleApp
             
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            RouteDebug.RouteDebugger.RewriteRoutesForTesting(RouteTable.Routes);
+           // RouteDebug.RouteDebugger.RewriteRoutesForTesting(RouteTable.Routes);
         }
     }
 }

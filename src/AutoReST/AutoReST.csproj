@@ -45,6 +45,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonAssemblyInfo.cs" />
+    <Compile Include="Filters\AutoActionResult.cs" />
+    <Compile Include="Filters\AutoRestRouteHandler.cs" />
+    <Compile Include="Filters\ConverterTargets.cs" />
+    <Compile Include="Filters\Convertors\JsonConverter.cs" />
+    <Compile Include="Filters\Convertors\XmlConverter.cs" />
+    <Compile Include="Filters\IModelConverter.cs" />
+    <Compile Include="Filters\ModelConverterFactory.cs" />
     <Compile Include="Infrastructure\ControllerFinder.cs" />
     <Compile Include="Infrastructure\IControllerFinder.cs" />
     <Compile Include="Infrastructure\MappingException.cs" />
@@ -66,6 +73,7 @@
     <Compile Include="Routing\VerbRouting.cs" />
     <Compile Include="Routing\UrlType.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

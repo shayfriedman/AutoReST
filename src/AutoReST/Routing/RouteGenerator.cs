@@ -28,6 +28,8 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // =============================================================
 #endregion
+
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Mvc;
@@ -64,14 +66,18 @@ namespace AutoReST.Routing
 
             foreach (ActionInfo action in actions)
             {
-
-                routeCollection.MapRoute(
-                    _routing.GetRouteName(action),
-                    _routing.GetRouteUrl(action),
-                    new { controller = _routing.GetRouteController(action), action = _routing.GetRouteAction(action)},
-                    new { method = new RoutingHttpVerbConstraint(_routing.GetRouteConstraint(action))});
+                MapRoute(routeCollection, action, false);
+				MapRoute(routeCollection, action, true);
             }
-
         }
+
+    	private void MapRoute(RouteCollection routeCollection, ActionInfo action, bool withFormat)
+    	{
+    		routeCollection.MapRoute(
+    			_routing.GetRouteName(action),
+    			_routing.GetRouteUrl(action) + (withFormat ? ".{format}" : String.Empty),
+    			new { controller = _routing.GetRouteController(action), action = _routing.GetRouteAction(action), format = UrlParameter.Optional },
+    			new { method = new RoutingHttpVerbConstraint(_routing.GetRouteConstraint(action))});
+    	}
     }
 }
